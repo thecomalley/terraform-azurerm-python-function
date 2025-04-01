@@ -17,7 +17,7 @@ data "azurerm_function_app_host_keys" "test" {
 }
 
 data "http" "index" {
-  url    = "${var.endpoint}/api/req?code=${data.azurerm_function_app_host_keys.test.primary_key}&user=terraform"
+  url    = "https://${var.endpoint}/api/req?code=${data.azurerm_function_app_host_keys.test.primary_key}&user=terraform"
   method = "GET"
 
   request_headers = {

@@ -17,8 +17,8 @@ module "terraform_azurerm_python_function" {
   python_source_code = "src"
 
   environment_variables = {
-    "EXAMPLE_ENV_1" = "example_value_1"
-    "EXAMPLE_ENV_2" = "example_value_2"
+    EXAMPLE_ENV_1 = "example_value_1"
+    EXAMPLE_ENV_2 = "example_value_2"
   }
 
   secret_environment_variables = [
