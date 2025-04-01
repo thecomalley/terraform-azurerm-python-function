@@ -1,0 +1,53 @@
+formatter: "" # this is required
+
+recursive:
+  enabled: false
+  path: modules
+  include-main: true
+
+sort:
+  enabled: true
+  by: required
+
+output:
+  file: README.md
+  mode: inject
+  template: |-
+    <!-- BEGIN_TF_DOCS -->
+    {{ .Content }}
+    <!-- END_TF_DOCS -->
+
+# .terraform-docs.yml
+content: |-
+  {{ .Header }}
+
+  ## Example
+
+  ```hcl
+  {{ include "examples/main/main.tf" }}
+  ```
+
+  {{ .Inputs }}
+
+  {{ .Outputs }}
+
+  {{ .Providers }}
+
+  {{ .Requirements }}
+
+  {{ .Footer }}
+
+settings:
+  anchor: true
+  color: true
+  default: true
+  description: false
+  escape: true
+  hide-empty: false
+  html: true
+  indent: 2
+  lockfile: true
+  read-comments: true
+  required: true
+  sensitive: true
+  type: true
