@@ -4,17 +4,10 @@ repos:
     rev: v1.98.0
     hooks:
       - id: terraform_fmt
-
       - id: terraform_docs
-
       - id: terraform_validate
         args:
           - --hook-config=--retry-once-with-cleanup=true
-
       - id: terraform_tflint
         args:
-          - --hook-config=--config=recursive=false
-          - --hook-config=--config=.tflint.hcl
-
-      - id: terraform_trivy
-        files: ^iac/
+          - --args=--config=__GIT_WORKING_DIR__/.tflint.hcl

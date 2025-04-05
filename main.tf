@@ -1,6 +1,7 @@
 resource "azurerm_resource_group" "main" {
   name     = var.resource_group_name
   location = var.location
+  tags     = var.tags
 }
 
 resource "azurerm_storage_account" "main" {
@@ -9,6 +10,7 @@ resource "azurerm_storage_account" "main" {
   location                 = azurerm_resource_group.main.location
   account_tier             = "Standard"
   account_replication_type = "LRS"
+  tags                     = var.tags
 }
 
 resource "azurerm_service_plan" "main" {
@@ -17,6 +19,7 @@ resource "azurerm_service_plan" "main" {
   location            = azurerm_resource_group.main.location
   os_type             = "Linux"
   sku_name            = "Y1"
+  tags                = var.tags
 }
 
 resource "azurerm_log_analytics_workspace" "main" {
@@ -25,6 +28,7 @@ resource "azurerm_log_analytics_workspace" "main" {
   resource_group_name = azurerm_resource_group.main.name
   sku                 = "PerGB2018"
   retention_in_days   = 30
+  tags                = var.tags
 }
 
 resource "azurerm_application_insights" "main" {
@@ -33,6 +37,7 @@ resource "azurerm_application_insights" "main" {
   resource_group_name = azurerm_resource_group.main.name
   workspace_id        = azurerm_log_analytics_workspace.main.id
   application_type    = "other"
+  tags                = var.tags
 }
 
 resource "azurerm_linux_function_app" "main" {
@@ -65,4 +70,5 @@ resource "azurerm_linux_function_app" "main" {
       python_version = var.python_version
     }
   }
+  tags = var.tags
 }

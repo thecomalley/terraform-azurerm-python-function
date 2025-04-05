@@ -3,15 +3,21 @@ provider "azurerm" {
   # ARM_SUBSCRIPTION_ID = ""
 }
 
+run "setup" {
+  module {
+    source = "./tests/setup"
+  }
+}
+
 run "main" {
   variables {
-    resource_group_name       = "tapf-test-rg"
-    function_app_name         = "tapf-test-func"
-    storage_account_name      = "tapfteststorage"
-    log_analytics_name        = "tapf-test-law"
-    app_service_plan_name     = "tapf-test-asp"
-    application_insights_name = "tapf-test-ai"
-    key_vault_name            = "tapf-test-kv"
+    resource_group_name       = "tapf-test${run.setup.test_id}-rg"
+    function_app_name         = "tapf-test${run.setup.test_id}-func"
+    storage_account_name      = "tapftest${run.setup.test_id}storage"
+    log_analytics_name        = "tapf-test${run.setup.test_id}-law"
+    app_service_plan_name     = "tapf-test${run.setup.test_id}-asp"
+    application_insights_name = "tapf-test${run.setup.test_id}-ai"
+    key_vault_name            = "tapf-test${run.setup.test_id}-kv"
 
     python_version     = "3.11"
     python_source_code = "src"

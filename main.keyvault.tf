@@ -13,6 +13,7 @@ locals {
   secret_environment_variables = {
     for secret in var.secret_environment_variables : secret => lower(replace(secret, "_", "-"))
   }
+  tags = var.tags
 }
 
 resource "azurerm_key_vault_secret" "main" {
@@ -29,6 +30,7 @@ resource "azurerm_key_vault_secret" "main" {
   depends_on = [
     azurerm_role_assignment.terraform,
   ]
+  tags = var.tags
 }
 
 # grant deployment user access to the key vault
