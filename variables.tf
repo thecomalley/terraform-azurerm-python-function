@@ -3,11 +3,6 @@ variable "python_version" {
   type        = string
 }
 
-variable "python_source_code" {
-  description = "(Required) The path to the Python source code."
-  type        = string
-}
-
 variable "environment_variables" {
   type        = map(string)
   description = "(Optional) A map of environment variables to be passed to the function app."
@@ -20,10 +15,21 @@ variable "secret_environment_variables" {
   default     = []
 }
 
+variable "python_source_code_path" {
+  description = "(Required) The path to the Python source code."
+  type        = string
+}
+
 variable "python_source_code_excludes" {
   type        = list(string)
   description = "(Optional) A list of files or directories to exclude from the source code zip file."
-  default     = []
+  default = [
+    ".venv",
+    ".git",
+    ".gitignore",
+    "__pycache__",
+    ".DS_Store",
+  ]
 }
 
 variable "tags" {

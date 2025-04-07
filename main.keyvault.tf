@@ -7,30 +7,26 @@ resource "azurerm_key_vault" "main" {
   purge_protection_enabled   = false
   sku_name                   = "standard"
   enable_rbac_authorization  = true
+  tags                       = var.tags
 }
 
 locals {
   secret_environment_variables = {
     for secret in var.secret_environment_variables : secret => lower(replace(secret, "_", "-"))
   }
-  tags = var.tags
 }
 
 resource "azurerm_key_vault_secret" "main" {
-  for_each     = local.secret_environment_variables
-  name         = each.value
-  value        = "update-me-in-the-portal"
-  key_vault_id = azurerm_key_vault.main.id
-  content_type = "${var.function_app_name} environment variable: ${each.key}"
-
-  lifecycle {
-    ignore_changes = [value] # Allow the value to be managed in the portal
-  }
+  for_each         = local.secret_environment_variables
+  name             = each.value
+  value_wo         = "update-me-in-the-portal"
+  value_wo_version = "1.0"
+  key_vault_id     = azurerm_key_vault.main.id
+  content_type     = "${var.function_app_name} environment variable: ${each.key}"
 
   depends_on = [
     azurerm_role_assignment.terraform,
   ]
-  tags = var.tags
 }
 
 # grant deployment user access to the key vault
